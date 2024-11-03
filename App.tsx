@@ -1,7 +1,20 @@
-import { Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { theme } from './theme';
 
 export default function App() {
+    const handleAlert = () => {
+        Alert.alert('You have pressed a button', 'Not sure which type just yet', [
+            {
+                text: 'Got it!',
+                onPress: () => console.log('Got it!'),
+                style: 'destructive'
+            },
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            }
+        ]);
+    };
     return (
         <View style={styles.container}>
             <View style={{ borderBottomWidth: 1, borderColor: '#9245b9' }}>
@@ -21,7 +34,7 @@ export default function App() {
                         <Text style={styles.buttonText}>Pressable Button</Text>
                     </Pressable>
                     <TouchableOpacity
-                        onPress={() => console.log('Touchable pressed')}
+                        onPress={handleAlert}
                         activeOpacity={0.8}
                         style={styles.button}
                     >
