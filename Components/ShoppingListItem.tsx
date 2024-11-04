@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 5,
         alignItems: 'flex-end',
-        borderWidth: 2, // Sets the width of the border
-        borderColor: 'blue', // Sets the color of the border
+        borderWidth: 2,
+        borderColor: 'blue',
         borderRadius: 10
     },
     button: {
