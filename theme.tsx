@@ -1,5 +1,7 @@
 export const theme = {
     colorWine: '#5a065a',
     colorBlack: '#000',
-    colorWhite: '#fff'
+    colorWhite: '#fff',
+    colorGrey: 'grey',
+    colorLightGrey: '#eee'
 };

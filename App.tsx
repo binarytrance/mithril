@@ -1,4 +1,4 @@
-import { Alert, Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { theme } from './theme';
 import { ShoppingListItem } from './Components/ShoppingListItem';
 
@@ -6,7 +6,7 @@ export default function App() {
     return (
         <View style={styles.container}>
             <ShoppingListItem name='Coffee' />
-            <ShoppingListItem name='Tea' />
+            <ShoppingListItem name='Tea' isCompleted />
             <ShoppingListItem name='Coke' />
         </View>
     );

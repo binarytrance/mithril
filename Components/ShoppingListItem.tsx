@@ -3,9 +3,10 @@ import { theme } from '../theme';
 
 type Props = {
     name: string;
+    isCompleted?: boolean;
 };
 
-export const ShoppingListItem = ({ name }: Props) => {
+export const ShoppingListItem = ({ name, isCompleted }: Props) => {
     const handleAlert = () => {
         Alert.alert(
             'You have pressed a button',
@@ -24,21 +25,42 @@ export const ShoppingListItem = ({ name }: Props) => {
         );
     };
     return (
-        <View style={{ borderBottomWidth: 1, borderColor: '#9245b9' }}>
+        <View
+            style={[
+                {
+                    borderBottomWidth: 1,
+                    borderColor: '#9245b9',
+                    padding: 8,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                },
+                isCompleted ? styles.completedContainer : undefined
+            ]}
+        >
             {/* <Text>Pixel ratio: {PixelRatio.get()}</Text> */}
-            <Text style={styles.itemText}>{name}</Text>
+            <Text style={[styles.itemText, isCompleted ? styles.completedText : undefined]}>
+                {name}
+            </Text>
             {/* <StatusBar style='auto' /> */}
             <View style={styles.buttonContainer}>
                 {/* /** * You can use 3 kinds of button elements 1. Button - cannot be customised 2.
                     Pressable 3. TouchableOpacity */}
-                <View style={styles.buttonWrapper}>
+                <View style={[styles.buttonWrapper, styles.displayNone]}>
                     <Button title='Native Button' />
                 </View>
-                <Pressable onPress={() => console.log('pressable pressed!')} style={styles.button}>
+                <Pressable
+                    onPress={() => console.log('pressable pressed!')}
+                    style={[styles.button, styles.displayNone]}
+                >
                     <Text style={styles.buttonText}>Pressable Button</Text>
                 </Pressable>
-                <TouchableOpacity onPress={handleAlert} activeOpacity={0.8} style={styles.button}>
-                    <Text style={styles.buttonText}>TouchableOp Button</Text>
+                <TouchableOpacity
+                    onPress={handleAlert}
+                    activeOpacity={0.8}
+                    style={[styles.button, isCompleted ? styles.completedButton : undefined]}
+                >
+                    <Text style={styles.buttonText}>DELETE</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -52,10 +74,10 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 5,
-        alignItems: 'flex-end',
-        borderWidth: 2,
-        borderColor: 'blue',
-        borderRadius: 10
+        alignItems: 'flex-end'
+        // borderWidth: 2,
+        // borderColor: 'blue',
+        // borderRadius: 10
     },
     button: {
         backgroundColor: theme.colorBlack,
@@ -67,5 +89,21 @@ const styles = StyleSheet.create({
     buttonText: {
         color: theme.colorWhite,
         letterSpacing: 2
+    },
+    displayNone: {
+        display: 'none'
+    },
+    completedContainer: {
+        backgroundColor: theme.colorLightGrey,
+        borderBottomColor: theme.colorLightGrey
+    },
+    completedButton: {
+        backgroundColor: theme.colorGrey
+    },
+    completedText: {
+        textDecorationLine: 'line-through',
+        textDecorationColor: theme.colorGrey,
+        color: theme.colorGrey,
+        fontWeight: 'normal'
     }
 });
