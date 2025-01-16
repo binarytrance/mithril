@@ -1,5 +1,6 @@
 import { Alert, Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { theme } from '../theme';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 type Props = {
     name: string;
@@ -55,12 +56,12 @@ export const ShoppingListItem = ({ name, isCompleted }: Props) => {
                 >
                     <Text style={styles.buttonText}>Pressable Button</Text>
                 </Pressable>
-                <TouchableOpacity
-                    onPress={handleAlert}
-                    activeOpacity={0.8}
-                    style={[styles.button, isCompleted ? styles.completedButton : undefined]}
-                >
-                    <Text style={styles.buttonText}>DELETE</Text>
+                <TouchableOpacity onPress={handleAlert} activeOpacity={0.8}>
+                    <AntDesign
+                        name='closecircle'
+                        size={24}
+                        color={isCompleted ? theme.colorGrey : theme.colorRed}
+                    />
                 </TouchableOpacity>
             </View>
         </View>
