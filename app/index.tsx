@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import { theme } from '../theme';
 import { ShoppingListItem } from '../Components/ShoppingListItem';
 import { Link } from 'expo-router';
@@ -16,11 +16,21 @@ const initialList: ShoppingListItemType[] = [
     { id: '3', name: 'Milk', isCompleted: false }
 ];
 
+const placeholderList: ShoppingListItemType[] = new Array(1000).fill(null).map((_, index) => ({
+    id: (index + 1).toString(),
+    name: `Item ${index + 1}`,
+    isCompleted: index % 2 === 0
+}));
+
 export default function App() {
-    const [shoppingList, setShoppingList] = useState(initialList);
+    const [shoppingList, setShoppingList] = useState(placeholderList);
     const [value, setValue] = useState<string>();
     return (
-        <View style={styles.container}>
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+            stickyHeaderIndices={[1]}
+        >
             <Link href='/counter'>Go to Counter</Link>
             <TextInput
                 value={value}
@@ -41,7 +51,7 @@ export default function App() {
             {shoppingList.map(item => (
                 <ShoppingListItem name={item.name} key={item.id} isCompleted={item.isCompleted} />
             ))}
-        </View>
+        </ScrollView>
     );
 }
 
@@ -49,11 +59,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colorWhite,
-        // alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 8,
-        paddingVertical: 10,
         paddingTop: 12
+        // paddingHorizontal: 8,
+        // paddingVertical: 10,
+        // paddingTop: 12
+    },
+    contentContainer: {
+        paddingBottom: 24
     },
     textInput: {
         borderColor: theme.colorLightGrey,
@@ -62,6 +74,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 50,
         marginHorizontal: 12,
-        marginBottom: 12
+        marginBottom: 12,
+        backgroundColor: theme.colorWhite
     }
 });
