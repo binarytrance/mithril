@@ -6,9 +6,10 @@ type Props = {
     name: string;
     isCompleted?: boolean;
     onDelete: () => void;
+    onToggleCompletion: () => void;
 };
 
-export const ShoppingListItem = ({ name, isCompleted, onDelete }: Props) => {
+export const ShoppingListItem = ({ name, isCompleted, onDelete, onToggleCompletion }: Props) => {
     const handleAlert = () => {
         Alert.alert(
             'You have pressed a button',
@@ -27,7 +28,8 @@ export const ShoppingListItem = ({ name, isCompleted, onDelete }: Props) => {
         );
     };
     return (
-        <View
+        <Pressable
+            onPress={onToggleCompletion}
             style={[
                 {
                     borderBottomWidth: 1,
@@ -53,7 +55,11 @@ export const ShoppingListItem = ({ name, isCompleted, onDelete }: Props) => {
                 </View>
                 <Pressable
                     onPress={() => console.log('pressable pressed!')}
-                    style={[styles.button, styles.displayNone]}
+                    style={[
+                        styles.button,
+                        styles.displayNone,
+                        { borderWidth: 1, borderColor: '#9245b9' }
+                    ]}
                 >
                     <Text style={styles.buttonText}>Pressable Button</Text>
                 </Pressable>
@@ -65,7 +71,7 @@ export const ShoppingListItem = ({ name, isCompleted, onDelete }: Props) => {
                     />
                 </TouchableOpacity>
             </View>
-        </View>
+        </Pressable>
     );
 };
 
@@ -99,9 +105,9 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colorLightGrey,
         borderBottomColor: theme.colorLightGrey
     },
-    completedButton: {
-        backgroundColor: theme.colorGrey
-    },
+    // completedButton: {
+    //     backgroundColor: theme.colorGrey
+    // },
     completedText: {
         textDecorationLine: 'line-through',
         textDecorationColor: theme.colorGrey,
