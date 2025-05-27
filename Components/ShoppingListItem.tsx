@@ -5,9 +5,10 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 type Props = {
     name: string;
     isCompleted?: boolean;
+    onDelete: () => void;
 };
 
-export const ShoppingListItem = ({ name, isCompleted }: Props) => {
+export const ShoppingListItem = ({ name, isCompleted, onDelete }: Props) => {
     const handleAlert = () => {
         Alert.alert(
             'You have pressed a button',
@@ -15,7 +16,7 @@ export const ShoppingListItem = ({ name, isCompleted }: Props) => {
             [
                 {
                     text: 'Got it!',
-                    onPress: () => console.log('Got it!'),
+                    onPress: () => onDelete(),
                     style: 'destructive'
                 },
                 {
