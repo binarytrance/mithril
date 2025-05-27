@@ -1,6 +1,7 @@
 import { Alert, Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { theme } from '../theme';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import * as Haptics from 'expo-haptics';
 
 type Props = {
     name: string;
@@ -11,21 +12,18 @@ type Props = {
 
 export const ShoppingListItem = ({ name, isCompleted, onDelete, onToggleCompletion }: Props) => {
     const handleAlert = () => {
-        Alert.alert(
-            'You have pressed a button',
-            `You have pressed on one of the button of the item ${name}`,
-            [
-                {
-                    text: 'Got it!',
-                    onPress: () => onDelete(),
-                    style: 'destructive'
-                },
-                {
-                    text: 'Cancel',
-                    style: 'cancel'
-                }
-            ]
-        );
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        Alert.alert('Are you sure?', `The item ${name} will be deleted permanently.`, [
+            {
+                text: 'Got it!',
+                onPress: () => onDelete(),
+                style: 'destructive'
+            },
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            }
+        ]);
     };
     return (
         <Pressable

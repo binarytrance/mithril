@@ -4,6 +4,7 @@ import { ShoppingListItem } from '../Components/ShoppingListItem';
 import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { getStorageItem, setStorageItem } from '../utils/storage';
+import * as Haptics from 'expo-haptics';
 
 const STORAGE_KEY = 'shoppingList';
 
@@ -70,20 +71,29 @@ export default function App() {
             shoppingList.filter(item => item.id !== id)
         );
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
         setShoppingList(prev => prev.filter(item => item.id !== id));
         console.log('Item deleted');
     };
     const onToggleCompletion = (id: string) => {
-        const newShoppingList = shoppingList.map(item =>
-            item.id === id
-                ? {
-                      ...item,
-                      isCompleted: !item.isCompleted,
-                      completedAt: item.completedAt ? undefined : Date.now(),
-                      lastUpdatedAt: Date.now()
-                  }
-                : item
-        );
+        const newShoppingList = shoppingList.map(item => {
+            if (item.id === id) {
+                if (item.completedAt) {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                } else {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                }
+                return {
+                    ...item,
+                    isCompleted: !item.isCompleted,
+                    completedAt: item.completedAt ? undefined : Date.now(),
+                    lastUpdatedAt: Date.now()
+                };
+            } else {
+                return item;
+            }
+        });
+
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setStorageItem(STORAGE_KEY, newShoppingList);
         setShoppingList(newShoppingList);
